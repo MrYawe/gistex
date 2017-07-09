@@ -24,19 +24,17 @@ defmodule Gist do
 
   # We decode the JSON body for every requests
   def process_response_body(body), do: Poison.decode!(body)
+  def process_request_body(body), do: Poison.encode!(body)
 
-  def list_gists(user \\ "") do
+  def list(user) do
     get!("/users/#{user}/gists").body
-    |> pretty_gist
-    |> IO.puts
   end
 
-  defp pretty_gist(response) do
-    response
-    |> Enum.map(fn gist ->
-      public = if gist["public"], do: "", else: "(secret)"
-      description = if gist["description"] != "", do: gist["description"], else: Map.keys(gist["files"]) |> Enum.join(" ")
-      "#{gist["html_url"]} #{String.replace(description, "\n", " ")} #{public} \n"
-    end)
+  def create(content, filename \\ "a.ex", options \\ []) do
+    create_multiple(%{filename => content}, options)
+  end
+
+  def create_multiple(files, options \\ []) do
+    post!("/gists", Enum.into(options, %{files: files})).body
   end
 end

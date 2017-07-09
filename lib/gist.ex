@@ -14,16 +14,18 @@ defmodule Gist do
       :world
 
   """
-  @api_base_url "https://api.github.com"
   @api_version "v3"
 
   # require IEx; IEx.pry
 
-  # Helper, to request directly with the path
-  def process_url(url), do: @api_base_url <> url
+  defp endpoint, do: Application.fetch_env!(:gist, :endpoint)
 
-  # We decode the JSON body for every requests
+  # Helper, to request directly with the path
+  def process_url(url), do: endpoint() <> url
+
+  def process_response_body(""), do: nil
   def process_response_body(body), do: Poison.decode!(body)
+
   def process_request_body(body), do: Poison.encode!(body)
 
   def list(user) do

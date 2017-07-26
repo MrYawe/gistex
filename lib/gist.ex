@@ -1,86 +1,31 @@
 defmodule Gist do
-  use HTTPoison.Base
+  alias Gist.API
 
-  @moduledoc """
-  Documentation for Gist.
-  """
+  defdelegate list(user), to: API
 
-  @doc """
-  Hello world.
+  defdelegate list_all(options \\ []), to: API
 
-  ## Examples
+  defdelegate find(id), to: API
 
-      iex> Gist.hello
-      :world
+  defdelegate find(id, sha), to: API
 
-  """
-  @api_version "v3"
+  defdelegate create(content, filename \\ "a.ex", options \\ []), to: API
 
-  # require IEx; IEx.pry
+  defdelegate create_multiple(files, options \\ []), to: API
 
-  defp endpoint, do: Application.fetch_env!(:gist, :endpoint)
+  defdelegate edit(id, content, filename \\ "a.ex", options \\ []), to: API
 
-  # Helper, to request directly with the path
-  def process_url(url), do: endpoint() <> url
+  defdelegate edit_multiple(id, files, options \\ []), to: API
 
-  def process_response_body(""), do: nil
-  def process_response_body(body), do: Poison.decode!(body)
+  defdelegate list_commits(id), to: API
 
-  def process_request_body(body), do: Poison.encode!(body)
+  defdelegate star(id), to: API
 
-  def list!(user) do
-    get!("/users/#{user}/gists").body
-  end
+  defdelegate unstar(id), to: API
 
-  def list_all!(options \\ []) do
-    get!("/gists/public", [], params: options).body
-  end
+  defdelegate fork(id), to: API
 
-  def get!(id) do
-    get!("/gists/#{id}").body
-  end
+  defdelegate list_forks(id), to: API
 
-  def get!(id, sha) do
-    get!("/gists/#{id}/#{sha}").body
-  end
-
-  def create!(content, filename \\ "a.ex", options \\ []) do
-    create_multiple!(%{filename => content}, options)
-  end
-
-  def create_multiple!(files, options \\ []) do
-    post!("/gists", Enum.into(options, %{files: files})).body
-  end
-
-  def edit!(id, content, filename \\ "a.ex", options \\ []) do
-    edit_multiple!(id, %{filename => content}, options)
-  end
-
-  def edit_multiple!(id, files, options \\ []) do
-    post!("/gists/#{id}", Enum.into(options, %{files: files})).body
-  end
-
-  def list_commits!(id) do
-    get!("/gists/#{id}/commits").body
-  end
-
-  def star!(id) do
-    put!("/gists/#{id}/star").body
-  end
-
-  def unstar!(id) do
-    delete!("/gists/#{id}/star").body
-  end
-
-  def fork!(id) do
-    post!("/gists/#{id}/forks", nil).body
-  end
-
-  def list_forks!(id) do
-    get!("/gists/#{id}/forks").body
-  end
-
-  def delete!(id) do
-    delete!("/gists/#{id}").body
-  end
+  defdelegate destroy(id), to: API
 end

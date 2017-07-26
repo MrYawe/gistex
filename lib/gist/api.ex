@@ -1,5 +1,5 @@
-defmodule Gist.API do
-  import Gist.Request
+defmodule Gistex.API do
+  import Gistex.Request
 
   def list(user) do
     get("/users/#{user}/gists")

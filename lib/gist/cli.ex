@@ -1,4 +1,4 @@
-defmodule Gist.CLI do
+defmodule Gistex.CLI do
   def main(args \\ []) do
     args
     |> parse_args

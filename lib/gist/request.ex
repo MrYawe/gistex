@@ -1,8 +1,8 @@
-defmodule Gist.Request do
+defmodule Gistex.Request do
   use HTTPoison.Base
 
   @moduledoc """
-  Documentation for Gist.
+  Documentation for Gistex.
   """
 
   @api_version "v3"
@@ -21,7 +21,7 @@ defmodule Gist.Request do
 
   def process_response(%HTTPoison.Response{status_code: status, body: body}) when status >= 200 and status < 300, do: body
   def process_response(%HTTPoison.Response{status_code: status, body: body }) do
-    raise Gist.Error, code: status, message: inspect body
+    raise Gistex.Error, code: status, message: inspect body
   end
 
   def get(path, params \\ []) do

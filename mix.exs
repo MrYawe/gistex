@@ -1,4 +1,4 @@
-defmodule Gist.Mixfile do
+defmodule Gistex.Mixfile do
   use Mix.Project
 
   def project do
@@ -40,6 +40,6 @@ defmodule Gist.Mixfile do
   end
 
   def escript do
-    [main_module: Gist.CLI]
+    [main_module: Gistex.CLI]
   end
 end

@@ -1,3 +1,3 @@
-defmodule Gist.Error do
+defmodule Gistex.Error do
   defexception [:code, :message]
 end

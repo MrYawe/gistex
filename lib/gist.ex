@@ -1,5 +1,5 @@
-defmodule Gist do
-  alias Gist.API
+defmodule Gistex do
+  alias Gistex.API
 
   defdelegate list(user), to: API
 

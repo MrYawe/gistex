@@ -1,4 +1,4 @@
-# Gist
+# Gistex
 
 **TODO: Add description**
 

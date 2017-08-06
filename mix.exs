@@ -11,7 +11,6 @@ defmodule Gistex.Mixfile do
       description: description(),
       package: package(),
       deps: deps(),
-      escript: escript(),
       name: "Gistex",
       source_url: "https://github.com/MrYawe/gistex"
     ]
@@ -43,10 +42,6 @@ defmodule Gistex.Mixfile do
       {:poison, "~> 3.1"},
       {:bypass, "~> 0.7", only: :test}
     ]
-  end
-
-  def escript do
-    [main_module: Gistex.CLI]
   end
 
   defp description do

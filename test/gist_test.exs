@@ -1,5 +1,6 @@
 defmodule GistexTest do
   use ExUnit.Case, async: true
+  alias Gistex.Client
 
   setup do
     bypass = Bypass.open
@@ -41,7 +42,7 @@ defmodule GistexTest do
         assert json ==  %{"files" => %{"hello_world.txt" => "Hello world"}}
         Plug.Conn.resp(conn, 200, "")
       end)
-      Gistex.create("Hello world", "hello_world.txt")
+      Gistex.create("hello_world.txt", "Hello world")
     end
 
     test "it should accept options", %{bypass: bypass} do
@@ -52,7 +53,7 @@ defmodule GistexTest do
         assert json["public"] == true
         Plug.Conn.resp(conn, 200, "")
       end)
-      Gistex.create("Hello world", "hello_world.txt",
+      Gistex.create("hello_world.txt", "Hello world", %Client{},
         description: "My description", public: true)
     end
   end
